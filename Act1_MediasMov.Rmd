@@ -1,0 +1,80 @@
+---
+title: "Actividad1 - Medias Móviles"
+author: "Camila Turner Escalante & Ramona Nájera Fuentes"
+date: "13/06/2022"
+output: 
+  html_document: 
+    highlight: pygments
+    theme: yeti
+    toc: yes
+    number_sections: yes
+---
+<br>
+
+```{r setup, include=TRUE}
+knitr::opts_chunk$set(echo = TRUE)
+
+# Librerías
+library(readxl)
+library(forecast)
+library(smooth)
+library(dplyr)
+
+```
+
+
+Leer los datos
+```{r}
+
+datos <- read_excel("./demandas_semanales.xlsx")
+attach(datos)
+
+```
+
+Convertir a objeto tipo serie de tiempo
+```{r}
+datos_ts = ts(datos$Demanda, start = c(1,1), frequency = 7)
+datos_ts
+
+```
+
+
+## Utiliza  promedios  simples  basados  en  3  y  9  semanas  para  predecir  la  semana  de  las  cinco semanas siguientes.  
+
+MA(3)
+
+```{r}
+pronosMA3 <- ma(datos.ts, order=3)
+summary(pronos1)
+plot(ventas.ts)
+lines(pronos1, col="red")
+
+
+```
+
+
+MA(6
+```{r}
+
+
+
+```)
+
+<br>
+
+## Explica el comportamiento de los resultados obtenidos.  
+
+```{r}
+
+```
+
+<br>
+
+## ¿Cuál de los pronósticos obtenidos consideras más adecuado? ¿Por qué? 
+```{r}
+
+```
+
+<br>
+<br>
+<br>
