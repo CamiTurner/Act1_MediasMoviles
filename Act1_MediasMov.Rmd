@@ -1,7 +1,7 @@
 ---
 title: "Actividad1 - Medias Móviles"
 author: "Camila Turner Escalante & Ramona Nájera Fuentes"
-date: "13/06/2022"
+date: "17/06/2022"
 output: 
   html_document: 
     highlight: pygments
@@ -22,6 +22,7 @@ library(dplyr)
 
 ```
 
+<br>
 
 Leer los datos
 ```{r}
@@ -31,6 +32,8 @@ attach(datos)
 
 ```
 
+<br>
+
 Convertir a objeto tipo serie de tiempo
 ```{r}
 datos_ts = ts(datos$Demanda, start = c(1,1), frequency = 7)
@@ -38,15 +41,18 @@ datos_ts
 
 ```
 
+<br>
 
 ## Utiliza  promedios  simples  basados  en  3  y  9  semanas  para  predecir  la  semana  de  las  cinco semanas siguientes.  
 
-MA(3)
+<br>
+
+**PROMEDIOS SIMPLES BASADOS EN 3 SEMANAS (ma(order=3))**
 ```{r}
 pronosMA3 <- ma(datos_ts, order=3)
 summary(pronosMA3)
 plot(datos_ts)
-lines(pronosMA3, col="red")
+#lines(pronosMA3, col="red")
 
 modeloMA3 <- arima(datos_ts,order=c(0,0,3))
 summary(modeloMA3)
@@ -68,13 +74,14 @@ modeloMA3_2
 #plot(datos_forecast_MA3)
 
 
-datos_fc_MA3 <- sma(datos_ts,order=3,h=4,silent=FALSE)
+datos_fc_MA3 <- sma(datos_ts,order=3,h=5,silent=FALSE)
 fc1 <- forecast(datos_fc_MA3)
 print(fc1)
 ```
 
+<br>
 
-MA(9)
+**PROMEDIOS SIMPLES BASADOS EN 9 SEMANAS (ma(order=9))**
 ```{r}
 pronosMA9 <- ma(datos_ts, order=9)
 summary(pronosMA9)
@@ -101,7 +108,7 @@ modeloMA9_2
 #plot(datos_forecast_MA9)
 
 
-datos_fc_MA9 <- sma(datos_ts,order=9,h=4,silent=FALSE)
+datos_fc_MA9 <- sma(datos_ts,order=9,h=5,silent=FALSE)
 fc2 <- forecast(datos_fc_MA9)
 print(fc2)
 ```
@@ -110,16 +117,21 @@ print(fc2)
 
 ## Explica el comportamiento de los resultados obtenidos.  
 
-```{r}
 
-```
+Inicialmente se hace un suavizamiento de los datos para poder pasar a la predicción solicitada
+Donde order equivale a las semanas tomadas en cuenta para hacer la predicción (en este caso 3 o 9) y h equivale a los periodos que se van a predecir (que serían 5).
+ 
+Posteriormente, pasamos a la parte de predicción de los datos y, debido a los valores de suavizamiento usados, se puede apreciar que la gráfica de orden 3 describe mucho mejor a los datos y en la de orden 9 se generaliza el comportamiento de estos.
+
 
 <br>
 
 ## ¿Cuál de los pronósticos obtenidos consideras más adecuado? ¿Por qué? 
-```{r}
 
-```
+
+Por las razones previamente explicadas, creemos que el pronóstico más adecuado es el 3 debido a que los valores obtenidos se ajustan mejor a los datos reales.
+
+![](sma3.png)
 
 <br>
 <br>
