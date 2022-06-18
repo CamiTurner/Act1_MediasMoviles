@@ -42,23 +42,69 @@ datos_ts
 ## Utiliza  promedios  simples  basados  en  3  y  9  semanas  para  predecir  la  semana  de  las  cinco semanas siguientes.  
 
 MA(3)
-
 ```{r}
-pronosMA3 <- ma(datos.ts, order=3)
-summary(pronos1)
-plot(ventas.ts)
-lines(pronos1, col="red")
+pronosMA3 <- ma(datos_ts, order=3)
+summary(pronosMA3)
+plot(datos_ts)
+lines(pronosMA3, col="red")
+
+modeloMA3 <- arima(datos_ts,order=c(0,0,3))
+summary(modeloMA3)
+
+datos_ts.add <- decompose(datos_ts,type="additive")
+datos_ts.mult <- decompose(datos_ts,type="multiplicative")
+
+auto.arima(datos_ts,trace=T) #sacar mejor modelo
+#ARIMA(2,1,0)(1,0,0)[7] --> mejor modelo según R
+
+modeloMA3_2 <- arima(datos_ts, order=c(2,1,0),seasonal=list(order=c(1,0,0)))
+modeloMA3_2
 
 
+# -------- PRONÓSTICOS ---------
+
+#datos_forecast_MA3 <- forecast(modeloMA3_2, h=5) #aquí debes poner el mejor modelo
+#datos_forecast_MA3
+#plot(datos_forecast_MA3)
+
+
+datos_fc_MA3 <- sma(datos_ts,order=3,h=4,silent=FALSE)
+fc1 <- forecast(datos_fc_MA3)
+print(fc1)
 ```
 
 
-MA(6
+MA(9)
 ```{r}
+pronosMA9 <- ma(datos_ts, order=9)
+summary(pronosMA9)
+plot(datos_ts)
+#lines(pronosMA9, col="red")
+
+modeloMA9 <- arima(datos_ts,order=c(0,0,9))
+summary(modeloMA9)
+
+datos_ts.add <- decompose(datos_ts,type="additive")
+datos_ts.mult <- decompose(datos_ts,type="multiplicative")
+
+auto.arima(datos_ts,trace=T) #sacar mejor modelo
+#ARIMA(2,1,0)(1,0,0)[7] --> mejor modelo según R
+
+modeloMA9_2 <- arima(datos_ts, order=c(2,1,0),seasonal=list(order=c(1,0,0)))
+modeloMA9_2
 
 
+# -------- PRONÓSTICOS ---------
 
-```)
+#datos_forecast_MA9 <- forecast(modeloMA9_2, h=5) #aquí debes poner el mejor modelo
+#datos_forecast_MA9
+#plot(datos_forecast_MA9)
+
+
+datos_fc_MA9 <- sma(datos_ts,order=9,h=4,silent=FALSE)
+fc2 <- forecast(datos_fc_MA9)
+print(fc2)
+```
 
 <br>
 
